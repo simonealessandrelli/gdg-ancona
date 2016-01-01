@@ -1,0 +1,93 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<!-- Polymer library -->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<!-- Firebase elements -->
+<link rel="import" href="../../bower_components/firebase-element/firebase-document.html">
+
+<!-- Custom elements -->
+<link rel="import" href="router-behavior.html">
+
+<!-- GDGA-ROUTER -->
+<dom-module id="gdga-router">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <!-- Firebase element to fetch routes data -->
+    <firebase-document id="firebase-routes"
+      location$="{{_calculateLocation(fbBaseUrl, fbPath)}}"
+      data="{{routes}}"
+      on-firebase-value="_onRoutesLoaded">
+    </firebase-document>
+  </template>
+  <script>
+  'use strict';
+  window.MyBehaviors = window.MyBehaviors || {};
+
+  (function(mb) {
+
+    Polymer({
+      is: 'gdga-router',
+
+      behaviors: [
+        mb.RouterBehavior
+      ],
+
+      properties: {
+        /**
+         * Base Firebase application URL
+         * @type {String}
+         */
+        fbBaseUrl: {
+          type: String
+        },
+
+        /**
+         * Path of this entity
+         * @type {String}
+         */
+        fbPath: {
+          type: String,
+          notify: true,
+          value: 'routes'
+        }
+
+      },
+      /**
+       * Ready callback
+       */
+      ready: function(){
+        console.log(this.id + ' is ready');
+      },
+      /**
+       * Listener for [on-firebase-value] event on <firebase-document>
+       */
+      _onRoutesLoaded: function () {
+        this.fire('routes-loaded', this.$['firebase-routes']);
+      },
+      /**
+       * Calculate the new location everytime baseUrl or route parameters
+       * change.
+       * @param  {String} baseUrl base URL Application
+       * @param  {String} route   current path
+       * @return {String}         full URL
+       */
+      _calculateLocation: function (baseUrl, route) {
+        return [baseUrl, route].join('/');
+      }
+    });
+  })(window.MyBehaviors);
+  </script>
+</dom-module>

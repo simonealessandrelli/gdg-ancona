@@ -1,0 +1,150 @@
+<!-- Polymer element -->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<script>
+  'use strict';
+
+  window.MyBehaviors = window.MyBehaviors || {};
+  window.MyUtilities = window.MyUtilities || {
+    /**
+     * Merge defaults with user options
+     * @private
+     * @param {Object} defaults Default settings
+     * @param {Object} options User options
+     * @returns {Object} Merged values of defaults and options
+     */
+    extend : function ( source, dest ) {
+      var prop;
+      for (prop in source) {
+          if (Object.prototype.hasOwnProperty.call(source, prop)) {
+              dest[prop] = source[prop];
+          }
+      }
+    }
+  };
+
+  (function(mb, mu){
+    function Route(proto){
+
+        mu.extend(proto, this);
+        /**
+         * Function that calculate the path
+         * @return {String} routable path as '#'+path
+         */
+        this.getRoutablePath = function () {
+          return '#' + this.path;
+        };
+    }
+    mb.RouterBehavior = {
+
+      properties: {
+
+        /*
+         * Routes node
+         * @type {Object}
+         * H<=>C
+         */
+        routes: {
+          type: Object,
+          notify: true,
+          observer: '_onRoutesChanged'
+        },
+
+        /**
+         * Routes node as array
+         * @type {Array}
+         * H=>C
+         */
+        routeItems: {
+          type: Array,
+          notify: true,
+          readOnly: true
+        },
+
+        /**
+         * Routes node as Object
+         * @type {Object}
+         * H=>C
+         */
+        routeObjects: {
+          type: Object,
+          notify: true,
+          readOnly: true
+        },
+
+        /**
+         * Default root
+         * @type {Object::Route}
+         * H=>C
+         */
+        defaultRoute: {
+          type: Object,
+          notify: true,
+          readOnly: true,
+          observer: '_onDefaultRouteChanged'
+        },
+
+        /**
+         * Selected route
+         * @type {Object::Route}
+         * H<=>C
+         */
+        selectedRoute: {
+          type: Object,
+          notify: true,
+          observer: '_onRouteChanged'
+        }
+      },
+
+      /**
+       * Set the selectedRoute if it is not set
+       * @param  {Object::Route} newDefaultRoute [description]
+       */
+      _onDefaultRouteChanged: function(newDefaultRoute){
+        if (!this.selectedRoute) {
+          this.set('selectedRoute', newDefaultRoute);
+        }
+      },
+      /**
+       * Call the router method to activate the new route
+       * @param  {Object} newRoute the new selected route
+       */
+      _onRouteChanged: function(newRoute){
+        //Fire the event
+        this.fire('route-changed', newRoute);
+      },
+
+      /**
+       * Convert the routes object and set the routeItems array along
+       * with the default route (if found).
+       * @param  {Object} routes routes as object
+       */
+      _onRoutesChanged: function(routes) {
+        //console.log('routes is changed');
+        var routesArray = [];
+        var routesObject = {};
+        if (routes) {
+          for (var key in routes) {
+            if (routes.hasOwnProperty(key)) {
+              //Create new route object
+              var newRoute = new Route(routes[key]);
+
+              //Add the route into the declared array
+              routesArray.push(newRoute);
+              //Add the route as property in object
+              routesObject[key] = newRoute;
+              //Set the default route
+              if (newRoute.defaultRoute) {
+                this._setDefaultRoute(newRoute);
+              }
+            }
+          }
+        }
+        //Set the routes array
+        this._setRouteItems(routesArray);
+        //Set the routes object
+        this._setRouteObjects(routesObject);
+      }
+    };
+  })(window.MyBehaviors, window.MyUtilities);
+</script>
