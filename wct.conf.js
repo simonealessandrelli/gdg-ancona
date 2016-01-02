@@ -5,16 +5,13 @@ var ret = {
   'webserver': {
     'pathMappings': []
   },
-  verbose: false,
-  expanded: true,
   plugins: {
-    local: {
-      disabled: true,
-      browsers: ['chrome']
+    'local': {
+      'browsers': ['chrome', 'firefox']
     },
     sauce: {
       disabled: true,
-      commandTimeout: 600 * 10,
+      commandTimeout: 600,
       idleTimeout: 180,
       username: 'simonealessandrelli',
       accessKey: 'ecb73d2b-3591-488e-af3c-c866370f3f32',
