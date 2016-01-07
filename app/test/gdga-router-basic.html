@@ -16,11 +16,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script src="../../bower_components/webcomponentsjs/webcomponents.min.js"></script>
   <script src="../../bower_components/web-component-tester/browser.js"></script>
-  <script src="../../bower_components/test-fixture/test-fixture-mocha.js"></script>
+  <!-- <script src="../../bower_components/test-fixture/test-fixture-mocha.js"></script> -->
 
   <!-- Element to test -->
-  <!-- <link rel="import" href="../../bower_components/polymer/polymer.html"> -->
-  <!-- <link rel="import" href="../../bower_components/promise-polyfill/promise-polyfill.html"> -->
+  <!-- <link rel="import" href="../../bower_components/polymer/polymer.html">
+  <link rel="import" href="../../bower_components/promise-polyfill/promise-polyfill.html"> -->
   <link rel="import" href="../elements/gdga-router/gdga-router.html">
 
 </head>
@@ -43,25 +43,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       setup(function() {
         router = fixture('gdga-router');
+        // router = document.querySelector('gdga-router');
       });
 
-      // test('routes-loaded event is fired when data is available', function() {
-      //   return new Promise(function(resolve, reject) {
-      //     router.addEventListener('routes-loaded', function() {
-      //       try{
-      //         resolve();
-      //       } catch (e) {
-      //         reject(e);
-      //       }
-      //     });
-      //   });
-      // });
-
-      test('router contains data on routes object', function() {
+      test('routes-loaded event is fired when data is available', function() {
         return new Promise(function(resolve, reject) {
           router.addEventListener('routes-loaded', function() {
             try{
-              expect(router.routes).to.be.an('Object');
               resolve();
             } catch (e) {
               reject(e);
@@ -69,6 +57,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           });
         });
       });
+
+      // test('router contains data on routes object', function(done) {
+      //   //return new Promise(function(resolve, reject) {
+      //     router.addEventListener('routes-loaded', function() {
+      //       done();
+      //       // try{
+      //         //expect(router.routes).to.be.an('Object');
+      //         //resolve();
+      //         // done();
+      //       // } catch (e) {
+      //         //reject(e);
+      //       // }
+      //     });
+      //   });
+      // });
 
     });
   });

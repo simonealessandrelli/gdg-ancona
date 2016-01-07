@@ -7,21 +7,22 @@ var ret = {
   },
   plugins: {
     'local': {
-      'browsers': ['chrome', 'firefox']
+      disabled: false,
+      browsers: ['chrome', 'firefox']
     },
-    sauce: {
-      disabled: true,
+    'sauce': {
+      disabled: false,
       commandTimeout: 600,
       idleTimeout: 180,
       username: 'simonealessandrelli',
       accessKey: 'ecb73d2b-3591-488e-af3c-c866370f3f32',
       browsers: [
         /* see https://docs.saucelabs.com/reference/platforms-configurator */
-        {
-          browserName: 'microsoftedge',
-          platform: 'Windows 10',
-          version: ''
-        },
+        // {
+        //   browserName: 'microsoftedge',
+        //   platform: 'Windows 10',
+        //   version: ''
+        // },
         {
           browserName: 'internet explorer',
           platform: 'Windows 8.1',
