@@ -16,10 +16,12 @@ before_script:
   - sh -e /etc/init.d/xvfb start
   - sleep 3
   - npm config set loglevel warn
-  - npm i -g bower gulp
+  #- npm i -g bower gulp
+  - npm i -g polymer-cli
   - bower i
 script:
-  - wct --plugin sauce
+  #- wct --plugin sauce
+  - polymer test --plugin sauce
 env:
   global:
     - "CXX='g++-4.8'"

@@ -1,0 +1,14 @@
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /home/simone/.npm-global/bin/firebase serve
+[debug] CLI Version:  3.0.2
+[debug] Platform:     linux
+[debug] Node Version: v5.1.0
+[debug] Time:         Mon Jun 06 2016 00:38:55 GMT+0200 (CEST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /home/simone/Copy/Projects/Polymer/gdga-ancona
+[info] Public Directory: build/unbundled
+[info] 
+[info] Server listening at: http://localhost:5000
